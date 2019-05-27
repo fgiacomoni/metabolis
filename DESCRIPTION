@@ -1,0 +1,38 @@
+Package: metabolis
+Type: Package
+Title: Metabolomics Data Sciences and Integration
+Version: 0.1.0
+Date: 2019-05-27
+Author: Etienne A. Thevenot
+Maintainer: Etienne A. Thevenot <etienne.thevenot@cea.fr>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+Depends:
+    Biobase,
+    biosigner,
+    MultiDataSet,
+    ropls
+Imports:
+    graphics,
+    grDevices,
+    grid,
+    limma,
+    methods,
+    PMCMRplus,
+    RColorBrewer,
+    stats,
+    utils,
+    VennDiagram
+Suggests:
+    BiocGenerics,
+    BiocStyle,
+    data.table,
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
+License: CeCILL
+Encoding: UTF-8
+LazyData: true
+URL: https://frama.link/etienne-thevenot
+RoxygenNote: 6.1.1
