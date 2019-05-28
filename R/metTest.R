@@ -54,11 +54,11 @@ setMethod("metTest", signature(x = "MultiDataSet"),
                     setC,
                     "' dataset:\n",
                     sep = "")
-
+              
               ese <- x[[setC]]
-
+              
               if (!(factorC %in% colnames(Biobase::pData(ese)))) {
-
+                
                 if (!is.null(info.txtC))
                   cat("The '",
                       factorC,
@@ -66,38 +66,38 @@ setMethod("metTest", signature(x = "MultiDataSet"),
                       setC,
                       "' dataset.\nNo test will be computed for this dataset.\n",
                       sep = "")
-
+                
               } else {
-
+                
                 ese <- metTest(ese,
-                                  factorC,
-                                  testC = testC,
-                                  adjustC = adjustC,
-                                  adjustThreshN = adjustThreshN,
-                                  plotMainC = setC,
-                                  fig.pdfC = figPdfC,
-                                  info.txtC = infTxtC)
-
+                               factorC,
+                               testC = testC,
+                               adjustC = adjustC,
+                               adjustThreshN = adjustThreshN,
+                               plotMainC = setC,
+                               fig.pdfC = figPdfC,
+                               info.txtC = infTxtC)
+                
                 x <- MultiDataSet::add_eset(x,
                                             ese,
                                             dataset.type = setC,
                                             GRanges = NA,
                                             overwrite = TRUE,
                                             warnings = FALSE)
-
+                
               }
-
+              
             }
-
+            
             if (!is.null(fig.pdfC) && !is.na(fig.pdfC))
               dev.off()
             
             if (!is.null(info.txtC) &&
                 !is.na(info.txtC))
               sink()
-
+            
             return(invisible(x))
-
+            
           })
 
 
@@ -146,7 +146,7 @@ setMethod("metTest", signature(x = "ExpressionSet"),
             if (!is.null(info.txtC) &&
                 !is.na(info.txtC))
               sink(info.txtC, append = TRUE)
-
+            
             if (!(factorC %in% colnames(Biobase::pData(x))))
               stop("'", factorC, "' was not found in the column names of pData(x).",
                    call. = FALSE)
@@ -155,28 +155,28 @@ setMethod("metTest", signature(x = "ExpressionSet"),
               plotMainC <- Biobase::experimentData(x)@title
             
             fdaDF <- Biobase::fData(x)
-
+            
             ## Getting the response (either a factor or a numeric)
-
+            
             tesLs <- metabolis:::.chooseTest(x, factorC, testC)
-
+            
             facFcVn <- tesLs[["facFcVn"]]
             facLevVc <- tesLs[["facLevVc"]]
             testC <- tesLs[["tesC"]]
             varPfxC <- tesLs[["varPfxC"]]
-
+            
             if (!is.null(info.txtC))
               cat("\nPerforming '", testC, "'\n", sep = "")
-
+            
             ## Two-level or quantitative
-
+            
             if (testC %in% c("ttest", "limma", "wilcoxon",
                              "pearson", "spearman")) {
               
               staC <- ifelse(testC %in% c("ttest", "limma", "wilcoxon"),
                              "dif",
                              "cor")
-
+              
               switch(testC,
                      ttest = {
                        staF <- function(y) diff(tapply(y,
@@ -210,9 +210,9 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                        tesF <- function(y) cor.test(facFcVn, y, method = "spearman",
                                                     use = "pairwise.complete.obs")[["p.value"]]
                      })
-
+              
               staVn <- apply(Biobase::exprs(x), 1, staF)
-
+              
               optWrnN <- options()$warn
               options(warn = -1)
               if (testC != "limma") {
@@ -228,7 +228,7 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                                   method = adjustC)
               }
               options(warn = optWrnN)
-
+              
               sigVn <- as.numeric(adjVn <= adjustThreshN)
               
               resMN <- cbind(staVn, adjVn, sigVn)
@@ -244,11 +244,11 @@ setMethod("metTest", signature(x = "ExpressionSet"),
               } else {
                 resSigMN <- NULL
               }
-
+              
               ## graphic
-
+              
               if (!is.null(fig.pdfC)) {
-
+                
                 if (!is.na(fig.pdfC))
                   pdf(fig.pdfC, onefile = TRUE)
                 
@@ -265,100 +265,101 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                          tesC = testC,
                          thrN = adjustThreshN)
                 
-                if (!is.na(fig.pdfC)) {
+                ## if (!is.na(fig.pdfC)) {
+                
+                varVi <- which(sigVn > 0)
+                
+                if (testC %in% c("ttest", "limma", "wilcoxon")) {
                   
-                  varVi <- which(sigVn > 0)
+                  facVc <- as.character(facFcVn)
+                  names(facVc) <- Biobase::sampleNames(x)
                   
-                  if (testC %in% c("ttest", "limma", "wilcoxon")) {
+                  for (varI in varVi) {
                     
-                    facVc <- as.character(facFcVn)
-                    names(facVc) <- Biobase::sampleNames(x)
+                    varC <- Biobase::featureNames(x)[varI]
                     
-                    for (varI in varVi) {
-                      
-                      varC <- Biobase::featureNames(x)[varI]
-                      
-                      .boxplot(facFcVn,
-                               t(Biobase::exprs(x))[, varI],
-                               paste0(varC, " (", adjustC, " = ", signif(adjVn[varI], 2), ")"),
-                               facVc)
-                      
-                    }
-                    
-                  } else {## pearson or spearman
-                    
-                    for (varI in varVi) {
-                      
-                      varC <- Biobase::featureNames(x)[varI]
-                      
-                      mod <- lm(t(Biobase::exprs(x))[, varI] ~  facFcVn)
-                      
-                      plot(facFcVn, t(Biobase::exprs(x))[, varI],
-                           xlab = factorC,
-                           ylab = "",
-                           pch = 18,
-                           main = paste0(varC, " (", adjustC, " = ", signif(adjVn[varI], 2), ", R2 = ", signif(summary(mod)$r.squared, 2), ")"))
-                      
-                      abline(mod, col = "red")
-                      
-                    }
+                    .boxplot(facFcVn,
+                             t(Biobase::exprs(x))[, varI],
+                             paste0(varC, " (", adjustC, " = ", signif(adjVn[varI], 2), ")"),
+                             facVc)
                     
                   }
                   
-                  dev.off()
+                } else {## pearson or spearman
+                  
+                  for (varI in varVi) {
+                    
+                    varC <- Biobase::featureNames(x)[varI]
+                    
+                    mod <- lm(t(Biobase::exprs(x))[, varI] ~  facFcVn)
+                    
+                    plot(facFcVn, t(Biobase::exprs(x))[, varI],
+                         xlab = factorC,
+                         ylab = "",
+                         pch = 18,
+                         main = paste0(varC, " (", adjustC, " = ", signif(adjVn[varI], 2), ", R2 = ", signif(summary(mod)$r.squared, 2), ")"))
+                    
+                    abline(mod, col = "red")
+                    
+                  }
                   
                 }
                 
+                if (!is.na(fig.pdfC))
+                  dev.off()
+                
+                ## }
+                
               }
-
+              
               ## More than two levels
-
+              
             } else if (testC == "anova") {
-
+              
               ## getting the names of the pairwise comparisons 'class1Vclass2'
               prwVc <- rownames(TukeyHSD(aov(t(Biobase::exprs(x))[, 1] ~ facFcVn))[["facFcVn"]])
-
+              
               prwVc <- gsub("-", ".", prwVc, fixed = TRUE) ## 2016-08-05: '-' character in dataframe column names seems not to be converted to "." by write.table on ubuntu R-3.3.1
-
+              
               ## omnibus and post-hoc tests
-
+              
               aovMN <- t(apply(t(Biobase::exprs(x)),
                                2,
                                function(varVn) {
-
-                aovMod <- aov(varVn ~ facFcVn)
-                pvaN <- summary(aovMod)[[1]][1, "Pr(>F)"]
-                hsdMN <- TukeyHSD(aovMod)[["facFcVn"]]
-                c(pvaN, c(hsdMN[, c("diff", "p adj")]))
-
-              }))
-
+                                 
+                                 aovMod <- aov(varVn ~ facFcVn)
+                                 pvaN <- summary(aovMod)[[1]][1, "Pr(>F)"]
+                                 hsdMN <- TukeyHSD(aovMod)[["facFcVn"]]
+                                 c(pvaN, c(hsdMN[, c("diff", "p adj")]))
+                                 
+                               }))
+              
               difVi <- 1:length(prwVc) + 1
-
+              
               ## difference of the means for each pairwise comparison
-
+              
               difMN <- aovMN[, difVi]
               colnames(difMN) <- paste0(varPfxC, prwVc, "_dif")
               
               ## correction for multiple testing
-
+              
               aovMN <- aovMN[, -difVi, drop = FALSE]
               aovMN <- apply(aovMN, 2, function(pvaVn) p.adjust(pvaVn, method = adjustC))
-
+              
               ## significance coding (0 = not significant, 1 = significant)
-
+              
               adjVn <- aovMN[, 1]
               sigVn <-  as.numeric(adjVn < adjustThreshN)
-
+              
               aovMN <- aovMN[, -1, drop = FALSE]
               colnames(aovMN) <- paste0(varPfxC, prwVc, "_", adjustC)
-
+              
               aovSigMN <- aovMN < adjustThreshN
               mode(aovSigMN) <- "numeric"
               colnames(aovSigMN) <- paste0(varPfxC, prwVc, "_sig")
-
+              
               ## final aggregated table
-
+              
               resMN <- cbind(adjVn, sigVn, difMN, aovMN, aovSigMN)
               rownames(resMN) <- Biobase::featureNames(x)
               colnames(resMN)[1:2] <- paste0(varPfxC, c(adjustC, "sig"))
@@ -372,12 +373,13 @@ setMethod("metTest", signature(x = "ExpressionSet"),
               } else {
                 resSigMN <- NULL
               }
-
+              
               ## graphic
-
-              if (!is.null(fig.pdfC) && !is.na(fig.pdfC)) {
+              
+              if (!is.null(fig.pdfC)) {
                 
-                pdf(fig.pdfC, onefile = TRUE)
+                if (!is.na(fig.pdfC))
+                  pdf(fig.pdfC, onefile = TRUE)
                 
                 for (varI in 1:nrow(Biobase::fData(x))) {
                   
@@ -410,14 +412,15 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                   
                 }
                 
-                dev.off()
+                if (!is.na(fig.pdfC))
+                  dev.off()
                 
               }
-
+              
             } else if (testC == "kruskal") {
-
+              
               ## getting the names of the pairwise comparisons 'class1.class2'
-
+              
               optWrnN <- options()$warn
               options(warn = -1)
               nemMN <- PMCMRplus::kwAllPairsNemenyiTest(t(Biobase::exprs(x))[, 1], facFcVn, "Tukey")[["p.value"]]
@@ -428,38 +431,38 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                                 colnames(nemMN)[c(col(nemMN))][nemVl])
               nemNamVc <- paste0(nemClaMC[, 1], ".", nemClaMC[, 2])
               pfxNemVc <- paste0(varPfxC, nemNamVc)
-
+              
               ## omnibus and post-hoc tests
               
               optWrnN <- options()$warn
               options(warn = -1)
               nemMN <- t(apply(Biobase::exprs(x), 1, function(varVn) {
-
+                
                 pvaN <- kruskal.test(varVn ~ facFcVn)[["p.value"]]
                 varNemMN <- PMCMRplus::kwAllPairsNemenyiTest(varVn, facFcVn, "Tukey")[["p.value"]]
                 c(pvaN, c(varNemMN))
                 
               }))
               options(warn = optWrnN)
-
+              
               ## correction for multiple testing
-
+              
               nemMN <- apply(nemMN, 2,
                              function(pvaVn) p.adjust(pvaVn, method = adjustC))
               adjVn <- nemMN[, 1]
               sigVn <- as.numeric(adjVn < adjustThreshN)
               nemMN <- nemMN[, c(FALSE, nemVl)]
               colnames(nemMN) <- paste0(pfxNemVc, "_", adjustC)
-
+              
               ## significance coding (0 = not significant, 1 = significant)
-
+              
               nemSigMN <- nemMN < adjustThreshN
               mode(nemSigMN) <- "numeric"
               colnames(nemSigMN) <- paste0(pfxNemVc, "_sig")
               nemSigMN[is.na(nemSigMN)] <- 0
-
+              
               ## difference of the medians for each pairwise comparison
-
+              
               difMN <- sapply(1:nrow(nemClaMC), function(prwI) {
                 prwVc <- nemClaMC[prwI, ]
                 prwVi <- which(facFcVn %in% prwVc)
@@ -467,13 +470,13 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                 apply(Biobase::exprs(x)[, prwVi], 1,
                       function(varVn)
                         -diff(as.numeric(tapply(varVn, prwFacFc,
-                                                              function(x)
-                                                                median(x, na.rm = TRUE)))))
+                                                function(x)
+                                                  median(x, na.rm = TRUE)))))
               })
               colnames(difMN) <- gsub("_sig", "_dif", colnames(nemSigMN))
-
+              
               ## final aggregated table
-
+              
               resMN <- cbind(adjVn, sigVn, difMN, nemMN, nemSigMN)
               rownames(resMN) <- Biobase::featureNames(x)
               colnames(resMN)[1:2] <- paste0(varPfxC, c(adjustC, "sig"))
@@ -487,12 +490,13 @@ setMethod("metTest", signature(x = "ExpressionSet"),
               } else {
                 resSigMN <- NULL
               }
-
+              
               ## graphic
-
-              if (!is.null(fig.pdfC) && !is.na(fig.pdfC)) {
+              
+              if (!is.null(fig.pdfC)) {
                 
-                pdf(fig.pdfC, onefile = TRUE)
+                if (!is.na(fig.pdfC))
+                  pdf(fig.pdfC, onefile = TRUE)
                 
                 for (varI in 1:nrow(Biobase::fData(x))) {
                   
@@ -525,14 +529,15 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                   
                 }
                 
-                dev.off()
+                if (!is.na(fig.pdfC))
+                  dev.off()
                 
               }
               
             }
-
+            
             ## Finalizing
-
+            
             if (!is.null(info.txtC)) {
               if (!is.null(resSigMN)) {
                 
@@ -545,8 +550,8 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                     ifelse(nrow(resSigMN) == 1,
                            "It is",
                            ifelse(nrow(resSigMN) <= 15,
-                           "They are",
-                           "The first 15 are")),
+                                  "They are",
+                                  "The first 15 are")),
                     " displayed below",
                     ifelse(nrow(resSigMN) > 1,
                            " (sorted by increasing corrected p-values)",
@@ -554,7 +559,7 @@ setMethod("metTest", signature(x = "ExpressionSet"),
                     ":\n",
                     sep = "")
                 print(resSigMN[1:min(15, nrow(resSigMN)), , drop = FALSE])
-
+                
               } else
                 cat("\nNo significant variable found at the selected ", adjustThreshN, " level\n", sep = "")
             }
@@ -566,23 +571,23 @@ setMethod("metTest", signature(x = "ExpressionSet"),
             if (!is.null(info.txtC) &&
                 !is.na(info.txtC))
               sink()
-
+            
             return(invisible(x))
-
+            
           })
 
 .boxplot <- function(xFc,
                      yVn,
                      maiC,
                      xVc) {
-
+  
   boxLs <- boxplot(yVn ~  xFc,
                    main = maiC)
-
+  
   outVn <- boxLs[["out"]]
-
+  
   if (length(outVn)) {
-
+    
     for (outI in 1:length(outVn)) {
       levI <- which(levels(xFc) == xVc[names(outVn)[outI]])
       text(levI,
@@ -590,13 +595,13 @@ setMethod("metTest", signature(x = "ExpressionSet"),
            labels = names(outVn)[outI],
            pos = ifelse(levI == 2, 2, 4))
     }
-
+    
   }
-
+  
 }
 
 .chooseTest <- function(eset, facC, tesC){
-
+  
   if (mode(Biobase::pData(eset)[, facC]) == "character") {
     facFcVn <- factor(Biobase::pData(eset)[, facC])
     facLevVc <- levels(facFcVn)
@@ -616,14 +621,14 @@ setMethod("metTest", signature(x = "ExpressionSet"),
     if (tesC %in% c("param", "nonparam"))
       tesC <- switch(tesC, param = "pearson", nonparam = "spearman")
   }
-
+  
   varPfxC <- paste0(make.names(facC), "_", tesC, "_")
   if (tesC %in% c("ttest", "limma", "wilcoxon"))
     varPfxC <- paste0(varPfxC, paste(facLevVc, collapse = "."), "_")
-
+  
   return(list(facFcVn = facFcVn,
               facLevVc = facLevVc,
               tesC = tesC,
               varPfxC = varPfxC))
-
+  
 }
