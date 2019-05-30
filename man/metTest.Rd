@@ -77,9 +77,9 @@ Provides numerical metrics and graphical overview of an ExpressionSet instance
 Provides numerical metrics and graphical overview of an ExpressionSet instance
 }
 \examples{
-prometMset <- readSet(system.file("extdata/promet", package="metabolis"))
+prometMset <- metRead(system.file("extdata/promet", package="metabolis"))
 prometMset <- metTest(prometMset, "gene")
-proSet <- readSet(system.file("extdata/promet/proteo", package="metabolis"))
+proSet <- metRead(system.file("extdata/promet/proteo", package="metabolis"))
 proSet <- metTest(proSet, "gene", fig.pdfC = NULL)
 head(fData(proSet))
 \dontrun{

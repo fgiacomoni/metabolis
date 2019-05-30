@@ -14,7 +14,7 @@
 #' @rdname metTransform
 #' @export
 #' @examples
-#' prometMset <- readSet(system.file("extdata/promet", package="systemis"))
+#' prometMset <- metRead(system.file("extdata/promet", package="metabolis"))
 #' prometMset <- metTransform(prometMset, "sqrt")
 #' printStr <- lapply(assayData(prometMset), function(aData) ropls::strF(aData[["exprs"]]))
 setMethod("metTransform", signature(x = "MultiDataSet"),
@@ -38,7 +38,7 @@ setMethod("metTransform", signature(x = "MultiDataSet"),
                     "' dataset:\n",
                     sep = "")
               
-              ese <- systemis::metTransform(x[[setC]],
+              ese <- metabolis::metTransform(x[[setC]],
                                               methodC,
                                               infTxtC)
               
@@ -66,7 +66,7 @@ setMethod("metTransform", signature(x = "MultiDataSet"),
 #'
 #' Transformation of the dataMatrix
 #'
-#' @param x An S4 object of class \code{MultiDataSet}
+#' @param x An S4 object of class \code{ExpressionSet}
 #' @param methodC Character: Factor of interest (name of a column from the
 #' pData(x))
 #' @param info.txtC Character: File name for the printed results (call to
@@ -76,12 +76,10 @@ setMethod("metTransform", signature(x = "MultiDataSet"),
 #' @rdname metTransform
 #' @export
 #' @examples
-#' proSet <- readSet(system.file("extdata/promet/proteo", package="systemis"))
-#' proSet <- metTransform(proSet, "sqrt")
-#' head(fData(proSet))
-#'\dontrun{
-#' proSet <- univariate(proSet, "gene", fig.pdfC = NA)
-#'}
+#' sacSet <- metRead(system.file("extdata/sacurine", package = "metabolis"))
+#' ropls::strF(t(exprs(sacSet)))
+#' sacSet <- metTransform(sacSet, "log2")
+#' ropls::strF(t(exprs(sacSet)))
 setMethod("metTransform", signature(x = "ExpressionSet"),
           function(x,
                    methodC = c("log2", "log10", "sqrt")[1],

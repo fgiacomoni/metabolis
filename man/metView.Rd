@@ -102,14 +102,14 @@ Provides numerical metrics and graphical overview of each dataset
 Provides numerical metrics and graphical overview of an ExpressionSet instance
 }
 \examples{
-prometMset <- readSet(system.file("extdata/promet",
+prometMset <- metRead(system.file("extdata/promet",
                                   package = "metabolis"))
 \dontrun{
 prometMset <- metView(prometMset)
 prometMset <- metView(prometMset, factorC = "gene")
 }
 
-metSet <- readSet(system.file("extdata/promet/metabo",
+metSet <- metRead(system.file("extdata/promet/metabo",
                               package = "metabolis"))
 \dontrun{
 metSet <- metView(metSet)

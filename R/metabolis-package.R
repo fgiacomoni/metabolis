@@ -1,4 +1,4 @@
-#' Metabolomics Data Sciences and Integration
+#' Metabolomics Data Analysis
 #'
 #' Package description
 #'

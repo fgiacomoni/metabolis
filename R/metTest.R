@@ -22,7 +22,7 @@
 #' @rdname metTest
 #' @export
 #' @examples
-#' prometMset <- readSet(system.file("extdata/promet", package="metabolis"))
+#' prometMset <- metRead(system.file("extdata/promet", package="metabolis"))
 #' prometMset <- metTest(prometMset, "gene")
 setMethod("metTest", signature(x = "MultiDataSet"),
           function(x,
@@ -126,7 +126,7 @@ setMethod("metTest", signature(x = "MultiDataSet"),
 #' @rdname metTest
 #' @export
 #' @examples
-#' proSet <- readSet(system.file("extdata/promet/proteo", package="metabolis"))
+#' proSet <- metRead(system.file("extdata/promet/proteo", package="metabolis"))
 #' proSet <- metTest(proSet, "gene", fig.pdfC = NULL)
 #' head(fData(proSet))
 #'\dontrun{

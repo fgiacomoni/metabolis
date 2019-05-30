@@ -1,12 +1,17 @@
 Package: metabolis
 Type: Package
-Title: Metabolomics Data Sciences and Integration
-Version: 0.1.0
-Date: 2019-05-27
+Title: Metabolomics Data Analysis
+Version: 0.1.4
+Date: 2019-05-30
 Author: Etienne A. Thevenot
 Maintainer: Etienne A. Thevenot <etienne.thevenot@cea.fr>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: This package provides methods to perform the statistical analysis
+    of metabolomics datasets. These methods include the reading of datasets
+    (as 3 table 'dataMatrix', 'sampleMetadata' and 'variableMetadata' .tsv files) into
+    an 'ExpressionSet' object ('metRead'), quality control ('metView') and transformation 
+    ('metTransform') of the dataMatrix, and univariate hypothesis testing ('metTest'). 
+    Multivariate analysis and feature selection can be further performed with the 
+    'ropls' and 'biosigner' packages, respectively (see the 'sacurine' vignette).
 Depends:
     Biobase,
     biosigner,

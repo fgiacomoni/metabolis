@@ -4,7 +4,7 @@
 \name{metabolis-package}
 \alias{metabolis-package}
 \alias{metabolis}
-\title{Metabolomics Data Sciences and Integration}
+\title{Metabolomics Data Analysis}
 \description{
 Package description
 }

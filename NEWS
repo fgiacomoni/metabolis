@@ -1,3 +1,17 @@
+CHANGES IN VERSION 0.1.4
+------------------------------
+
+NEW FEATURE
+
+    o 'sacurine' vignette
+
+CHANGES IN VERSION 0.1.2
+------------------------------
+
+NEW FEATURE
+
+    o 'metCorrect' method for signal drift and batch effect correction
+
 CHANGES IN VERSION 0.1.0
 ------------------------------
 

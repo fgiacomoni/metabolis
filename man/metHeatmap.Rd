@@ -70,10 +70,10 @@ Heatmap of a MultiDataSet instance
 Heatmap of an ExpressionSet instance
 }
 \examples{
-prometMset <- readSet(system.file("extdata/promet/",
+prometMset <- metRead(system.file("extdata/promet/",
 package="metabolis"))
 prometMset <- metHeatmap(prometMset)
-metSet <- readSet(system.file("extdata/promet/metabo",
+metSet <- metRead(system.file("extdata/promet/metabo",
 package="metabolis"))
 metSet <- metHeatmap(metSet)
 head(fData(metSet))

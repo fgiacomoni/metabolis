@@ -25,7 +25,7 @@ pData(x))}
 'sink()'); if NA (default), messages will be printed on the screen; if NULL,
 no verbose will be generated}
 
-\item{x}{An S4 object of class \code{MultiDataSet}}
+\item{x}{An S4 object of class \code{ExpressionSet}}
 
 \item{methodC}{Character: Factor of interest (name of a column from the
 pData(x))}
@@ -45,13 +45,11 @@ Transformation of the dataMatrix
 Transformation of the dataMatrix
 }
 \examples{
-prometMset <- readSet(system.file("extdata/promet", package="systemis"))
+prometMset <- metRead(system.file("extdata/promet", package="metabolis"))
 prometMset <- metTransform(prometMset, "sqrt")
 printStr <- lapply(assayData(prometMset), function(aData) ropls::strF(aData[["exprs"]]))
-proSet <- readSet(system.file("extdata/promet/proteo", package="systemis"))
-proSet <- metTransform(proSet, "sqrt")
-head(fData(proSet))
-\dontrun{
-proSet <- univariate(proSet, "gene", fig.pdfC = NA)
-}
+sacSet <- metRead(system.file("extdata/sacurine", package = "metabolis"))
+ropls::strF(t(exprs(sacSet)))
+sacSet <- metTransform(sacSet, "log2")
+ropls::strF(t(exprs(sacSet)))
 }

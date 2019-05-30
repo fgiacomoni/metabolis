@@ -20,7 +20,7 @@ output:
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width = 8,
                       fig.height = 8,
-                      fig.path = 'figures/')
+                      fig.path = 'figures/metabolis')
 ```
 
 # Loading package

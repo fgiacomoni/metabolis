@@ -1,3 +1,7 @@
+#' @rdname metCorrect
+#' @export
+setGeneric("metCorrect", function(x, ...) standardGeneric("metCorrect"))
+
 #' @rdname metHeatmap
 #' @export
 setGeneric("metHeatmap", function(x, ...) standardGeneric("metHeatmap"))

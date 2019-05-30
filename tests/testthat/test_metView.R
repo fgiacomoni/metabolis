@@ -2,7 +2,7 @@ testthat::context("Testing 'metView'")
 
 testthat::test_that("metView-eset", {
   
-  proSet <- metabolis::readSet(system.file("extdata/promet/proteo",
+  proSet <- metabolis::metRead(system.file("extdata/promet/proteo",
                                            package = "metabolis"))
   
   metabolis::metView(proSet,
@@ -17,7 +17,7 @@ testthat::test_that("metView-eset", {
 
 testthat::test_that("metView-mset", {
   
-  prometMset <- metabolis::readSet(system.file("extdata/promet",
+  prometMset <- metabolis::metRead(system.file("extdata/promet",
                                                package = "metabolis"))
   
   metabolis::metView(prometMset,

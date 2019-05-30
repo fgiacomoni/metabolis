@@ -31,7 +31,7 @@
 #' @return MultiDataSet including the computed sample and variable metrics
 #' @rdname metView
 #' @examples
-#' prometMset <- readSet(system.file("extdata/promet",
+#' prometMset <- metRead(system.file("extdata/promet",
 #'                                   package = "metabolis"))
 #'\dontrun{
 #' prometMset <- metView(prometMset)
@@ -211,7 +211,7 @@ setMethod("metView", signature(x = "MultiDataSet"),
 #' @return ExpressionSet including the computed sample and variable metrics
 #' @rdname metView
 #' @examples
-#' metSet <- readSet(system.file("extdata/promet/metabo",
+#' metSet <- metRead(system.file("extdata/promet/metabo",
 #'                               package = "metabolis"))
 #'\dontrun{
 #' metSet <- metView(metSet)

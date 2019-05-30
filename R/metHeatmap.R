@@ -16,7 +16,7 @@
 #' @rdname metHeatmap
 #' @export
 #' @examples
-#' prometMset <- readSet(system.file("extdata/promet/",
+#' prometMset <- metRead(system.file("extdata/promet/",
 #' package="metabolis"))
 #' prometMset <- metHeatmap(prometMset)
 setMethod("metHeatmap", signature(x = "MultiDataSet"),
@@ -102,7 +102,7 @@ setMethod("metHeatmap", signature(x = "MultiDataSet"),
 #' @rdname metHeatmap
 #' @export
 #' @examples
-#' metSet <- readSet(system.file("extdata/promet/metabo",
+#' metSet <- metRead(system.file("extdata/promet/metabo",
 #' package="metabolis"))
 #' metSet <- metHeatmap(metSet)
 #' head(fData(metSet))
