@@ -12,12 +12,28 @@ Etienne A. Thevenot [https://etiennethevenot.pagesperso-orange.fr/](https://etie
 
 ![](vignettes/figures/permanent/metabolis_methods.png)
 
+## Formats
+
+### 3 tabular file format used for import/export
+
+Input (i.e. preprocessed) data consists of a 'samples times variables' matrix of intensities (**datMatrix** numeric matrix), in addition to sample and variable metadata (**sampleMetadata** and **variableMetadata** data frames). Theses 3 tables can be conveniently imported to/exported from R as tabular files:
+
+![](figures/permanent/metabolis_3table-format.png)
+
+### **ExpressionSet** class used within the data analysis workflow
+
+Within the R workflow, the **ExpressionSet** class perfectly handles these 3 tables (for additional information about *ExpressionSet* class, see the ['An introduction to Biobase and ExpressionSets'](https://bioconductor.org/packages/release/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf) documentation from the [**Biobase**](https://doi.org/doi:10.18129/B9.bioc.Biobase) package).
+
 ## Installation
 
 ```r
 install.packages("devtools", dep=TRUE)  
-devtools::install_github("https://github.com/ethevenot/metabolis")      
+devtools::install_github("https://github.com/ethevenot/metabolis")
 ```
+
+## Tutorial
+
+See the [**metabolis vignette**](vignettes/metabolis.html) for a detailed example of the analysis of a metabolomics dataset.
 
 ## Acknowledgements
 
