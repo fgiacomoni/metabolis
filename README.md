@@ -18,7 +18,7 @@ Etienne A. Thevenot [https://etiennethevenot.pagesperso-orange.fr/](https://etie
 
 Input (i.e. preprocessed) data consists of a 'samples times variables' matrix of intensities (**datMatrix** numeric matrix), in addition to sample and variable metadata (**sampleMetadata** and **variableMetadata** data frames). Theses 3 tables can be conveniently imported to/exported from R as tabular files:
 
-![](figures/permanent/metabolis_3table-format.png)
+![](vignettes/figures/permanent/metabolis_3table-format.png)
 
 ### **ExpressionSet** class used within the data analysis workflow
 
