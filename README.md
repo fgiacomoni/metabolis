@@ -6,7 +6,7 @@ This package provides methods to perform the statistical analysis of metabolomic
 
 ## Author
 
-Etienne A. Thevenot [https://etiennethevenot.pagesperso-orange.fr/](https://etiennethevenot.pagesperso-orange.fr/)
+Etienne A. Thevenot ([https://etiennethevenot.pagesperso-orange.fr/](https://etiennethevenot.pagesperso-orange.fr/))
 
 ## Methods
 
@@ -33,7 +33,7 @@ devtools::install_github("https://github.com/ethevenot/metabolis")
 
 ## Tutorial
 
-See the [**metabolis vignette**](vignettes/metabolis.html) for a detailed example of the analysis of a metabolomics dataset.
+See the [**metabolis vignette**](vignettes/metabolis.Rmd) for a detailed example of the analysis of a metabolomics dataset.
 
 ## Acknowledgements
 
