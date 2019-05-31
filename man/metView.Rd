@@ -109,11 +109,12 @@ prometMset <- metView(prometMset)
 prometMset <- metView(prometMset, factorC = "gene")
 }
 
-metSet <- metRead(system.file("extdata/promet/metabo",
+sacSet <- metRead(system.file("extdata/sacurine",
                               package = "metabolis"))
-\dontrun{
-metSet <- metView(metSet)
-metSet <- metView(metSet, factorC = "gene")
-}
-
+sacSet <- metView(sacSet)
+sacSet <- metCorrect(sacSet)
+sacSet <- metView(sacSet)
+sacSet <- metTransform(sacSet)
+sacSet <- metView(sacSet)
+sacSet <- metView(sacSet, factorC = "gender")
 }

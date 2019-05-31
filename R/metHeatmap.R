@@ -102,10 +102,11 @@ setMethod("metHeatmap", signature(x = "MultiDataSet"),
 #' @rdname metHeatmap
 #' @export
 #' @examples
-#' metSet <- metRead(system.file("extdata/promet/metabo",
+#' sacSet <- metRead(system.file("extdata/sacurine",
 #' package="metabolis"))
-#' metSet <- metHeatmap(metSet)
-#' head(fData(metSet))
+#' sacSet <- metTransform(sacSet, "log10")
+#' sacSet <- metHeatmap(sacSet)
+#' head(fData(sacSet))
 setMethod("metHeatmap", signature(x = "ExpressionSet"),
           function(x,
                    dissymC = c("euclidean",
@@ -118,7 +119,7 @@ setMethod("metHeatmap", signature(x = "ExpressionSet"),
                                "1-abs(cor)")[7],
                    correlC = c("pearson",
                                "kendall",
-                               "spearman"),
+                               "spearman")[1],
                    aggloC = c("ward.D",
                               "ward.D2",
                               "single",

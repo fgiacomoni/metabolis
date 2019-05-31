@@ -79,11 +79,8 @@ Provides numerical metrics and graphical overview of an ExpressionSet instance
 \examples{
 prometMset <- metRead(system.file("extdata/promet", package="metabolis"))
 prometMset <- metTest(prometMset, "gene")
-proSet <- metRead(system.file("extdata/promet/proteo", package="metabolis"))
-proSet <- metTest(proSet, "gene", fig.pdfC = NULL)
-head(fData(proSet))
-\dontrun{
-proSet <- metTest(proSet, "gene", fig.pdfC = NA)
-proSet <- metTest(proSet, "gene", fig.pdfC = "proSet_metTest-gene.pdf")
-}
+sacSet <- metRead(system.file("extdata/sacurine", package="metabolis"))
+sacSet <- metCorrect(sacSet)
+sacSet <- metTransform(sacSet)
+sacSet <- metTest(sacSet, "gender", "ttest")
 }

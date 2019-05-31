@@ -1,8 +1,8 @@
 Package: metabolis
 Type: Package
 Title: Metabolomics Data Analysis
-Version: 0.1.4
-Date: 2019-05-30
+Version: 0.1.6
+Date: 2019-05-31
 Author: Etienne A. Thevenot
 Maintainer: Etienne A. Thevenot <etienne.thevenot@cea.fr>
 Description: This package provides methods to perform the statistical analysis

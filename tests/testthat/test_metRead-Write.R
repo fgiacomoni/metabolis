@@ -2,65 +2,65 @@ testthat::context("Testing 'read-write'")
 
 testthat::test_that(".metRead", {
   
-  metDirC <- system.file("extdata/promet/metabo",
+  sacDirC <- system.file("extdata/sacurine",
                          package = "metabolis")
   
-  metSet1 <- metabolis:::.metRead(metDirC)
+  sacSet1 <- metabolis:::.metRead(sacDirC)
   
-  testthat::expect_true(class(metSet1) == "ExpressionSet")
+  testthat::expect_true(class(sacSet1) == "ExpressionSet")
   
-  testthat::expect_equal(exprs(metSet1)[1, 1],
-                         5.576,
+  testthat::expect_equal(exprs(sacSet1)[1, 1],
+                         477491,
                          tolerance = 1e-3)
   # alternatively
-  metSet2 <- metabolis:::.metRead(NA,
-                                  file.path(metDirC, "dataMatrix.tsv"),
-                                  file.path(metDirC, "sampleMetadata.tsv"),
-                                  file.path(metDirC, "variableMetadata.tsv"))
+  sacSet2 <- metabolis:::.metRead(NA,
+                                  file.path(sacDirC, "dataMatrix.tsv"),
+                                  file.path(sacDirC, "sampleMetadata.tsv"),
+                                  file.path(sacDirC, "variableMetadata.tsv"))
   
-  testthat::expect_true(class(metSet2) == "ExpressionSet")
+  testthat::expect_true(class(sacSet2) == "ExpressionSet")
   
-  testthat::expect_equal(Biobase::exprs(metSet2)[1, 1],
-                         5.576,
+  testthat::expect_equal(Biobase::exprs(sacSet2)[1, 1],
+                         477491,
                          tolerance = 1e-3)
   
   
   testthat::expect_error(metabolis:::.metRead(NA,
-                                              file.path(metDirC, "dataMatrix.tsv_XXX"),
-                                              file.path(metDirC, "sampleMetadata.tsv"),
-                                              file.path(metDirC, "variableMetadata.tsv")))
+                                              file.path(sacDirC, "dataMatrix.tsv_XXX"),
+                                              file.path(sacDirC, "sampleMetadata.tsv"),
+                                              file.path(sacDirC, "variableMetadata.tsv")))
   
 })
 
 testthat::test_that("metRead_ExpressionSet", {
   
-  metDirC <- system.file("extdata/promet/metabo",
+  sacDirC <- system.file("extdata/sacurine",
                          package = "metabolis")
   
-  metSet2 <- metabolis::metRead(metDirC)
+  sacSet2 <- metabolis::metRead(sacDirC)
   
-  testthat::expect_true(class(metSet2) == "ExpressionSet")
+  testthat::expect_true(class(sacSet2) == "ExpressionSet")
   
-  testthat::expect_equal(Biobase::exprs(metSet2)[1, 1],
-                         5.576,
+  testthat::expect_equal(Biobase::exprs(sacSet2)[1, 1],
+                         477491,
                          tolerance = 1e-3)
   # alternatively
-  metSet3 <- metabolis::metRead(NA,
-                                filesLs = list(dataMatrix.tsvC = file.path(metDirC, "dataMatrix.tsv"),
-                                               sampleMetadata.tsvC = file.path(metDirC, "sampleMetadata.tsv"),
-                                               variableMetadata.tsvC = file.path(metDirC, "variableMetadata.tsv")))
+  sacSet3 <- metabolis::metRead(NA,
+                                filesLs = list(dataMatrix.tsvC = file.path(sacDirC, "dataMatrix.tsv"),
+                                               sampleMetadata.tsvC = file.path(sacDirC, "sampleMetadata.tsv"),
+                                               variableMetadata.tsvC = file.path(sacDirC, "variableMetadata.tsv")))
   
-  testthat::expect_true(class(metSet3) == "ExpressionSet")
+  testthat::expect_true(class(sacSet3) == "ExpressionSet")
   
-  testthat::expect_equal(exprs(metSet3)[1, 1],
-                         5.576,
+  testthat::expect_equal(exprs(sacSet3)[1, 1],
+                         477491,
                          tolerance = 1e-3)
   
   
   testthat::expect_error(metabolis::metRead(NA,
-                                            filesLs = list(dataMatrix.tsvC = file.path(metDirC, "dataMatrix.tsv_XXX"),
-                                                           sampleMetadata.tsvC = file.path(metDirC, "sampleMetadata.tsv"),
-                                                           variableMetadata.tsvC = file.path(metDirC, "variableMetadata.tsv"))))
+                                            filesLs = list(dataMatrix.tsvC = file.path(sacDirC, "dataMatrix.tsv_XXX"),
+                                                           sampleMetadata.tsvC = file.path(sacDirC, "sampleMetadata.tsv"),
+                                                           variableMetadata.tsvC = file.path(sacDirC, "variableMetadata.tsv"))))
   
 })
 

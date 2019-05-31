@@ -34,15 +34,17 @@ Reading datasets as subfolders containing the 3 tables 'dataMatrix.tsv',
 'sampleMetadata.tsv' and 'variableMetadata.tsv'
 }
 \examples{
-prometDirC <- system.file("extdata/promet", package="metabolis")
+dirC <- system.file("extdata", package="metabolis")
 ## 1) Single set
-metEset <- metRead(file.path(prometDirC, "metabo"))
+sacDirC <- file.path(dirC, "sacurine")
+sacSet <- metRead(sacDirC)
 # or
-metEset <- metRead(NA,
-                    filesLs = list(dataMatrix.tsvC = file.path(prometDirC, "metabo", "dataMatrix.tsv"),
-                                   sampleMetadata.tsvC = file.path(prometDirC, "metabo", "sampleMetadata.tsv"),
-                                   variableMetadata.tsvC = file.path(prometDirC, "metabo", "variableMetadata.tsv")))
+sacSet <- metRead(NA,
+                  filesLs = list(dataMatrix.tsvC = file.path(sacDirC, "dataMatrix.tsv"),
+                                 sampleMetadata.tsvC = file.path(sacDirC, "sampleMetadata.tsv"),
+                                 variableMetadata.tsvC = file.path(sacDirC, "variableMetadata.tsv")))
 ## 2) Multiple sets
+prometDirC <- file.path(dirC, "promet")
 prometMset <- metRead(prometDirC)
 metMset <- metRead(prometDirC, subsetVc = "metabo")
 # or

@@ -14,7 +14,7 @@ metHeatmap(x, ...)
 
 \S4method{metHeatmap}{ExpressionSet}(x, dissymC = c("euclidean",
   "maximum", "manhattan", "canberra", "binary", "minkowski", "1-cor",
-  "1-abs(cor)")[7], correlC = c("pearson", "kendall", "spearman"),
+  "1-abs(cor)")[7], correlC = c("pearson", "kendall", "spearman")[1],
   aggloC = c("ward.D", "ward.D2", "single", "complete", "average",
   "mcquitty", "median", "centroid")[2], clustVi = c(2, 2),
   fig.pdfC = NA, plotCexVn = c(1, 1),
@@ -73,8 +73,9 @@ Heatmap of an ExpressionSet instance
 prometMset <- metRead(system.file("extdata/promet/",
 package="metabolis"))
 prometMset <- metHeatmap(prometMset)
-metSet <- metRead(system.file("extdata/promet/metabo",
+sacSet <- metRead(system.file("extdata/sacurine",
 package="metabolis"))
-metSet <- metHeatmap(metSet)
-head(fData(metSet))
+sacSet <- metTransform(sacSet, "log10")
+sacSet <- metHeatmap(sacSet)
+head(fData(sacSet))
 }

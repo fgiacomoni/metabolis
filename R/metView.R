@@ -211,13 +211,14 @@ setMethod("metView", signature(x = "MultiDataSet"),
 #' @return ExpressionSet including the computed sample and variable metrics
 #' @rdname metView
 #' @examples
-#' metSet <- metRead(system.file("extdata/promet/metabo",
+#' sacSet <- metRead(system.file("extdata/sacurine",
 #'                               package = "metabolis"))
-#'\dontrun{
-#' metSet <- metView(metSet)
-#' metSet <- metView(metSet, factorC = "gene")
-#'}
-#'
+#' sacSet <- metView(sacSet)
+#' sacSet <- metCorrect(sacSet)
+#' sacSet <- metView(sacSet)
+#' sacSet <- metTransform(sacSet)
+#' sacSet <- metView(sacSet)
+#' sacSet <- metView(sacSet, factorC = "gender")
 setMethod("metView", signature(x = "ExpressionSet"),
           function(x,
                    factorC = NA,
