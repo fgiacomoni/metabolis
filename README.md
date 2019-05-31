@@ -8,6 +8,10 @@ This package provides methods to perform the statistical analysis of metabolomic
 
 Etienne A. Thevenot [https://etiennethevenot.pagesperso-orange.fr/](https://etiennethevenot.pagesperso-orange.fr/)
 
+## Methods
+
+![](vignettes/figures/permanent/metabolis_methods.png)
+
 ## Installation
 
 ```r
